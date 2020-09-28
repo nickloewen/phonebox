@@ -1,9 +1,5 @@
 # Phonebox
 
-TODO Github description: Make a phone call when a box is opened, using a Bluetooth Low Energy connection to a micro:bit
-
-***
-
 A small box which, when opened, causes your phone to ring and play a pre-recorded message.
 
 Created for my dad's birthday, to demonstrate the capabilities of the [micro:bit](http://microbit.org/) (part of his gift).
