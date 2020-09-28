@@ -1,0 +1,90 @@
+<html>
+<head>
+  <title> Phonebox </title>
+  <link href="https://unpkg.com/bonsai.css@latest/dist/bonsai.min.css" rel="stylesheet">
+</head>
+<body style="--bg:#eee;">
+
+<div style="--maxw:350px; --levitate:5; --mx:auto; --mt:10vh; --bg:#666; --br:10px;">
+  <div style="--bg:white; --p:20; --btlr:10px; --btrr:10px; ">
+    <h1> Phonebox </h1>
+
+    <p id="usage"> Pass target phone number in url, eg:<br>
+    <code>localhost:8080?num=5551234567</code><br>
+    (+1 is assumed) </p>
+
+      <button id="connect" class="green"> Connect to micro:bit </button>
+    <!-- <button id="reset"> Reset micro:bit </button> -->
+  </div>
+
+  <pre id="log" style="--c:#fc0; --pl:20; --pb:20;">Not connected</pre>
+
+</div>
+
+<script type="module">
+
+// UI SETUP
+
+const usageMessage = document.getElementById('usage');
+const connectButton = document.getElementById('connect');
+const displayLog = document.getElementById('log');
+
+const urlParams = new URLSearchParams(window.location.search);
+
+// Validate phone number
+const numStr = urlParams.get("num");
+const num = parseInt(numStr);
+if ( numStr === null ) {
+  usageMessage.style.color = "#ff0000";
+} else if ( numStr.length != 10 || num === NaN) {
+  usageMessage.style.color = "#ff0000";
+} else {
+  usageMessage.innerHTML = "Phone number is +1" + num;
+}
+
+// MAIN CODE
+
+import {phone} from './telephony-module.js';
+import {uBitUart} from './ble-uart-module.js';
+
+async function connect() {
+  let isDeviceReset = false;
+
+  await uBitUart.connect();
+
+  function checkLightLevel(levelString) {
+    let level = Number.parseInt(levelString);
+    if (level > 10) {
+      if (!isDeviceReset) {
+        // The micro:bit takes a moment to receive the reset message,
+        // and continues to report light levels in the mean time.
+        // So the `isDeviceReset` flag makes sure this code only runs once.
+        console.log("light level over 10!");
+        console.warn(`Resetting device...\n 
+          NOTE: current script can't handle reconnecting gracefully:
+          'Characteristic with UUID 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+          is no longer valid. Remember to retrieve the characteristic
+          again after reconnecting.'`);
+        uBitUart.resetDevice();
+
+        console.warn("Phoning", num);
+        phone('call', num);
+
+        displayLog.innerHTML = "Phoned.";
+      }
+      isDeviceReset = true;
+    }
+    if (!isDeviceReset) {
+      console.log("light level", level)
+      displayLog.innerHTML = "Light value is " + level;
+    }
+  }
+
+  uBitUart.subscribe(checkLightLevel);
+}
+
+connectButton.addEventListener('click', connect);
+</script>
+
+</body>
+</html>

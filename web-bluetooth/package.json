@@ -1,0 +1,19 @@
+{
+  "name": "phonebox",
+  "version": "0.1.0",
+  "description": "Make a phone call when a box is opened, using a Bluetooth Low Energy connection to a micro:bit",
+  "main": "server.js",
+  "dependencies": {
+    "twilio": "^3.49.2",
+    "url-parse": "^1.4.7",
+    "yargs": "^16.0.3",
+    "url-parse": "^1.4.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nick Loewen",
+  "license": "Unlicense"
+}
