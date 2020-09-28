@@ -14,11 +14,11 @@ There are three parts to this project:
 2. A local server (node.js) which hosts a page that can connect to the micro:bit (using Web Bluetooth in Google Chrome), and which passes messages from that page to Twilio
 3. A regular webserver serving the recording that Twilio should play
 
-This repository contains the [micro:bit code](microbit) and the [web bluetooth](TODO) code.
+This repository contains the [micro:bit code](microbit) and the [web bluetooth](web-bluetooth) code.
 
 ## Run it
 
-1. Flash the micro:bit with [TODO.hex](TODO)
+1. Flash the micro:bit with [the hex file](microbit/microbit-ble-lightsensor-report.hex)
 2. Run the web server: `node server.js --account=<Twilio account ID> --token=<Twilio authentication token> --number=<Twilio number>`
 3. Open the webpage, and give the number to dial as a query string: `http://localhost:8080?num=5551234567`
 4. Connect to micro:bit...
@@ -28,4 +28,4 @@ This repository contains the [micro:bit code](microbit) and the [web bluetooth](
 The micro:bit code is written in [MakeCode](http://makecode.microbit.org).
 You can import the hex file into MakeCode to edit it.
 
-There's also [a printable copy of the micro:bit source](TODO) in the `microbit/` folder.
+There's also [a printable copy of the micro:bit source](microbit/microbit-ble-lightsensor-report.pdf) in the `microbit/` folder.
