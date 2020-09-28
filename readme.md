@@ -14,7 +14,7 @@ There are three parts to this project:
 2. A local server (node.js) which hosts a page that can connect to the micro:bit (using Web Bluetooth in Google Chrome), and which passes messages from that page to Twilio
 3. A regular webserver serving the recording that Twilio should play
 
-This repository contains the [micro:bit code](TODO) and the [web bluetooth](TODO) code.
+This repository contains the [micro:bit code](microbit) and the [web bluetooth](TODO) code.
 
 ## Run it
 
